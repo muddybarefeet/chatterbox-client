@@ -31,32 +31,16 @@ var validateDisplay = function(str) {
 	$('.chat-list').empty();
   	var nums = '0123456789';
   	var alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,.!?:%;';
-  	//var alphLower = /[a-z]/;
-  	//var alphUpper = /[A-Z]/;
 
 	// loop through our messages and
 	_.each(str.results, function(datum, index){
-		var userTxt = "";
-		var userName = "";
+		var userTxt = datum.username || "Anonymous";
+		var userName = datum.text || "[---]";
 
-		_.each(datum.username, function(letter) {
-			if(alpha.indexOf(letter) === -1 && nums.indexOf(letter) === -1) {
-				userName += '\\';
-			}
-			userName += letter;
-		});
-
-		_.each(datum.text, function(char) {
-			if(alpha.indexOf(char) === -1 && nums.indexOf(char) === -1) {
-				userTxt += '\\';
-			}
-			userTxt += char;
-
-		});
 		//dont allow empty usernames or empty text
 		if (userName.length !== 0 && userTxt.length !== 0) {
 			//append them to messages list url
-			$(".chat-list").prepend("<li>" + userName + ' : ' + userTxt + "</li>")
+			$(".chat-list").prepend($("<li>").text( userTxt+ ' : ' + userName));
 		}
 	})
 
@@ -90,7 +74,6 @@ var get = function(){
 	  contentType: 'application/json',
 	  success: function(data){
 	  	data.results.reverse();
-	  	console.log(data.results);
 	  	validateDisplay(data);
 	  },
 	  error: function (data) {
@@ -100,35 +83,14 @@ var get = function(){
 	});
 };
 
-// allData = [obj, obj ... ]
-
-// allData.sort(function(a,b) {
-// 	return (new Date(a.createdAt) > new Date(b.createdAt)) ? 1 : -1;
-// }).reverse()
-
-// for (var i=0; ... allData) {
-// 	$('chat-list').prep
-// }
-
-/*var dateOfLastTweet = new Date(allData[99].createdAt);
-
-//
-_.filter(allData, function(value, key) {
-	return new Date(value.createdAt) > dateOfLastTweet
-})*/
-///
-
 //-------------------------------------------------------------------------//
 
 $(document).ready(function(){
-	//get the rooms
-	//get all the stuffs
 
-	//setInterval(function(){
-		//get the posts
+	setInterval(function(){
+		// get the posts
 		get();
-		console.log("working?");
-	//},1000);
+	},1000);
 
 	//when submit button is clicked, POST the name and message and room to server
 	$(".submitButton").on("click", function(){

@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype HTML>
 <html>
   <head>
     <meta charset="utf-8">
@@ -7,15 +7,24 @@
 
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
   </head>
   <body>
     <div id="main">
-      <h1>chatterbox</h1>
+      <h1>Chatterbox</h1>
       <!-- Your HTML goes here! -->
     </div>
-    <div id="chats"></div>
+    <div id="navBar"><button>Hi</button></div>
+    <div id="input">
+      Message: <input type="text" name="message" class="message">
+      <input type="submit" value="Chat!" class="submitButton">
+    </div>
+    <div id="chats">
+      <!-- <ul class="chat-list"></ul> -->
+    </div>
   </body>
 </html>

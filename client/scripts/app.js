@@ -28,9 +28,12 @@ var roomFilter = function(roomName) {
 
 var validateDisplay = function(str) {
 	//stuff here from lower
+	$('.chat-list').empty();
   	var nums = '0123456789';
   	var alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,.!?:%;';
-  	var $chats = $("<div class='chat-list'></div>")
+  	//var alphLower = /[a-z]/;
+  	//var alphUpper = /[A-Z]/;
+
 	// loop through our messages and
 	_.each(str.results, function(datum, index){
 		var userTxt = "";
@@ -53,13 +56,12 @@ var validateDisplay = function(str) {
 		//dont allow empty usernames or empty text
 		if (userName.length !== 0 && userTxt.length !== 0) {
 			//append them to messages list url
-			$(".chat-list").append("<li>" + userName + ' : ' + userTxt + "</li>")
+			$(".chat-list").prepend("<li>" + userName + ' : ' + userTxt + "</li>")
 		}
 	})
-	console.log($chats);
-	$("#chats").html("");
-	$("#chats").append($chats);
+
 };
+
 
 var post = function(message){
 	$.ajax({
@@ -78,6 +80,8 @@ var post = function(message){
 	});
 };
 
+var allData;
+
 var get = function(){
 	$.ajax({
 	  // This is the url you should use to communicate with the parse API server.
@@ -85,6 +89,8 @@ var get = function(){
 	  type: 'GET',
 	  contentType: 'application/json',
 	  success: function(data){
+	  	data.results.reverse();
+	  	console.log(data.results);
 	  	validateDisplay(data);
 	  },
 	  error: function (data) {
@@ -94,17 +100,35 @@ var get = function(){
 	});
 };
 
+// allData = [obj, obj ... ]
+
+// allData.sort(function(a,b) {
+// 	return (new Date(a.createdAt) > new Date(b.createdAt)) ? 1 : -1;
+// }).reverse()
+
+// for (var i=0; ... allData) {
+// 	$('chat-list').prep
+// }
+
+/*var dateOfLastTweet = new Date(allData[99].createdAt);
+
+//
+_.filter(allData, function(value, key) {
+	return new Date(value.createdAt) > dateOfLastTweet
+})*/
+///
+
 //-------------------------------------------------------------------------//
 
 $(document).ready(function(){
 	//get the rooms
 	//get all the stuffs
 
-	setInterval(function(){
+	//setInterval(function(){
 		//get the posts
 		get();
 		console.log("working?");
-	},1000);
+	//},1000);
 
 	//when submit button is clicked, POST the name and message and room to server
 	$(".submitButton").on("click", function(){

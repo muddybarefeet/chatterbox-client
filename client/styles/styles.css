@@ -5,7 +5,7 @@ body {
     font-family: arial, sans-serif;
 }
 
-#main, #chats, #navBar, #input {
+#main, #chats, #bar, #input {
     width: 500px;
     margin: auto;
     text-align: left;
@@ -17,6 +17,10 @@ body {
 /*#chats {
     height: 500px;
 }*/
+
+.roomButton {
+    display: inline;
+}
 
 #main h1 {
     margin-top: 0;
